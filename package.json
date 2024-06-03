@@ -3,6 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/uixp-elements-umd.cjs",
+  "module": "dist/uixp-elements.js",
+  "exports": {
+    ".": {
+      "import": "./dist/uixp-elements.js",
+      "require": "./dist/uixp-elements-umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -43,6 +54,7 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.9.1",
     "vite-tsconfig-paths": "^4.3.2"
   }
 }
