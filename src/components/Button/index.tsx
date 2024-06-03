@@ -1,14 +1,19 @@
 import { cn } from "@/utils";
+import "animate.css";
 import { cva, VariantProps } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 
 const buttonStyles = cva(
   [
     "w-full",
-    "rounded-md",
+    "rounded-2xl",
     "font-semibold",
     "focus:outline-none",
     "disabled:cursor-not-allowed",
+    "transform",
+    "ease-in-out",
+    "duration-300",
+    "hover:scale-105",
   ],
   {
     variants: {
@@ -92,16 +97,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        {icon && iconPosition === "left" && (
-          <span ref={ref} className="mr-2">
-            {icon}
-          </span>
-        )}
-        {children}
-        {icon && iconPosition === "right" && (
-          <span ref={ref} className="ml-2">
-            {icon}
-          </span>
+        {children ? (
+          <>
+            {icon && iconPosition === "left" && (
+              <span className="mr-2">{icon}</span>
+            )}
+            {children}
+            {icon && iconPosition === "right" && (
+              <span className="ml-2">{icon}</span>
+            )}
+          </>
+        ) : (
+          <span>{icon}</span>
         )}
       </button>
     );

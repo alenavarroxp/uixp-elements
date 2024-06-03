@@ -42,6 +42,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "react": "^18.2.0",
