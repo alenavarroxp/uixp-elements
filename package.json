@@ -1,8 +1,27 @@
 {
   "name": "uixp-elements",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.10",
   "type": "module",
+  "license": "MIT",
+  "author": "alenavarroxp",
+  "description": "A React library with UI components XP",
+  "keywords": [
+    "uixp-elements",
+    "uixp",
+    "elements",
+    "react",
+    "ui",
+    "components",
+    "design",
+    "system",
+    "xp",
+    "tailwindcss",
+    "tailwind"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alenavarroxp/uixp-elements"
+  },
   "files": [
     "dist"
   ],
