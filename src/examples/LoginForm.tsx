@@ -1,5 +1,6 @@
 import { Button, Input, Text } from "@/components";
 import { Box, Stack } from "@/components/Layout";
+import { FaSignInAlt } from "react-icons/fa";
 
 export const LoginForm = () => {
   return (
@@ -56,7 +57,13 @@ export const LoginForm = () => {
           className="mb-4"
         />
 
-        <Button type="submit" variant={"solid"} className="w-full">
+        <Button
+          type="submit"
+          variant={"solid"}
+          className="flex justify-between items-center w-full"
+          icon={<FaSignInAlt />}
+          iconPosition="right"
+        >
           Login
         </Button>
       </Stack>

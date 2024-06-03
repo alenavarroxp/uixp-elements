@@ -25,6 +25,11 @@ const buttonStyles = cva(
       colorscheme: {
         primary: "text-white",
       },
+      iconPosition: {
+        left: "flex items-center",
+        right: "flex items-center",
+        none: "",
+      },
     },
     compoundVariants: [
       {
@@ -48,20 +53,57 @@ const buttonStyles = cva(
       variant: "solid",
       size: "md",
       colorscheme: "primary",
+      iconPosition: "none",
     },
   }
 );
 
-type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
+type ButtonProps = ComponentProps<"button"> &
+  VariantProps<typeof buttonStyles> & {
+    icon?: React.ReactNode;
+    iconPosition?: "left" | "right";
+  };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, size, colorscheme, className, ...props }, ref) => {
+  (
+    {
+      variant,
+      size,
+      colorscheme,
+      icon,
+      iconPosition = "left",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         ref={ref}
-        className={cn(buttonStyles({ variant, size, colorscheme, className }))}
+        className={cn(
+          buttonStyles({
+            variant,
+            size,
+            colorscheme,
+            iconPosition,
+            className,
+          })
+        )}
         {...props}
-      />
+      >
+        {icon && iconPosition === "left" && (
+          <span ref={ref} className="mr-2">
+            {icon}
+          </span>
+        )}
+        {children}
+        {icon && iconPosition === "right" && (
+          <span ref={ref} className="ml-2">
+            {icon}
+          </span>
+        )}
+      </button>
     );
   }
 );

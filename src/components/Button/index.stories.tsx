@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { FaCoffee } from "react-icons/fa";
 import { Button } from ".";
 
 const meta: Meta<typeof Button> = {
@@ -32,5 +33,14 @@ export const Ghost: Story = {
   args: {
     variant: "ghost",
     children: "Button",
+  },
+};
+
+export const IconButton: Story = {
+  args: {
+    variant: "solid",
+    children: "Button",
+    icon: <FaCoffee />,
+    iconPosition: "left",
   },
 };
