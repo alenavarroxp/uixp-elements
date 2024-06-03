@@ -5,10 +5,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    "@storybook/addon-onboarding",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@chromatic-com/storybook",
+    "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
   ],
   framework: {
@@ -20,13 +19,13 @@ const config: StorybookConfig = {
   },
   viteFinal: async (config) => {
     config.plugins?.push(
-      /**@see https://github.com/aleclarson/vite-tsconfig-paths */
+      /** @see https://github.com/aleclarson/vite-tsconfig-paths */
       tsconfigPaths({
         projects: [path.resolve(path.dirname(__dirname), "tsconfig.json")],
       })
     );
+
     return config;
   },
 };
-
 export default config;
