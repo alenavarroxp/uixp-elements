@@ -1,6 +1,6 @@
 {
   "name": "uixp-elements",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "license": "MIT",
   "author": "alenavarroxp",
@@ -36,6 +36,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "publish": "yarn build && npm version patch && npm publish",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
