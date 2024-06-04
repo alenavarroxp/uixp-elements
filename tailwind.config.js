@@ -6,8 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: colors.blue,
-        uixp: {
+        default: {
           50: "#f2f3f4",
           100: "#e5e6e8",
           200: "#c9cbce",
@@ -20,6 +19,7 @@ export default {
           900: "#232628",
           950: "#17191a",
         },
+        primary: colors.blue,
       },
     },
   },

@@ -6,7 +6,6 @@ import { ComponentProps, forwardRef } from "react";
 const buttonStyles = cva(
   [
     "w-full",
-    "rounded-2xl",
     "font-semibold",
     "focus:outline-none",
     "disabled:cursor-not-allowed",
@@ -27,38 +26,46 @@ const buttonStyles = cva(
         md: "px-4 py-2 text-base",
         lg: "px-6 py-3 text-lg",
       },
-      colorscheme: {
-        primary: "text-white",
+      color: {
+        default: "bg-default-500 text-white",
+        primary: "bg-primary-500 text-white",
       },
       iconPosition: {
         left: "flex items-center",
         right: "flex items-center",
         none: "",
       },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        xl: "rounded-xl",
+        "2xl": "rounded-2xl",
+        "3xl": "rounded-3xl",
+        full: "rounded-full",
+      },
     },
     compoundVariants: [
       {
         variant: "solid",
-        colorscheme: "primary",
-        className: "bg-primary-500 hover:bg-primary-600",
       },
       {
         variant: "outline",
-        colorscheme: "primary",
         className:
-          "text-primary-600 border-primary-500 bg-transparent hover:bg-primary-100",
+          "text-default-600 border-default-500 bg-transparent hover:bg-default-100",
       },
       {
         variant: "ghost",
-        colorscheme: "primary",
-        className: "text-primary-600 bg-transparent hover:bg-primary-100",
+        className: `text-default-600 bg-transparent hover:bg-default-100`,
       },
     ],
     defaultVariants: {
       variant: "solid",
       size: "md",
-      colorscheme: "primary",
+      color: "default",
       iconPosition: "none",
+      rounded: "2xl",
     },
   }
 );
@@ -74,9 +81,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant,
       size,
-      colorscheme,
+      color,
       icon,
       iconPosition = "left",
+      rounded,
       className,
       children,
       ...props
@@ -90,8 +98,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           buttonStyles({
             variant,
             size,
-            colorscheme,
+            color,
             iconPosition,
+            rounded,
             className,
           })
         )}
