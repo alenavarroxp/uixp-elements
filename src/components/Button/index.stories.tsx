@@ -27,6 +27,10 @@ const meta: Meta<typeof Button> = {
       control: { type: "select" },
       options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
+    isDisabled: {
+      control: { type: "boolean" },
+      options: [true, false],
+    },
   },
   tags: ["autodocs"],
 };
@@ -65,13 +69,41 @@ export const Ghost: Story = {
   },
 };
 
-export const IconButton: Story = {
+export const Disabled: Story = {
   args: {
     variant: "solid",
     color: "default",
     size: "md",
     rounded: "2xl",
     children: "Button",
+    isDisabled: true,
+  },
+  argTypes: {
+    isDisabled: {
+      control: { type: "boolean" },
+      options: [true, false],
+    },
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    rounded: "2xl",
+    children: "Button",
+    icon: <FaCoffee />,
+    iconPosition: "left",
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    rounded: "2xl",
     icon: <FaCoffee />,
     iconPosition: "left",
   },

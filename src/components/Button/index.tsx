@@ -13,13 +13,14 @@ const buttonStyles = cva(
     "ease-in-out",
     "duration-300",
     "hover:scale-105",
+    "active:scale-95",
   ],
   {
     variants: {
       variant: {
         solid: "",
         outline: "border-2",
-        ghost: "transition-colors duration-300",
+        ghost: " duration-300",
       },
       size: {
         sm: "px-4 py-2 text-sm",
@@ -45,6 +46,10 @@ const buttonStyles = cva(
         "3xl": "rounded-3xl",
         full: "rounded-full",
       },
+      isDisabled: {
+        true: "bg-gray-500 pointer-events-none opacity-50 select-none",
+        false: "",
+      },
     },
     compoundVariants: [
       {
@@ -52,12 +57,23 @@ const buttonStyles = cva(
       },
       {
         variant: "outline",
-        className:
-          "text-default-600 border-default-500 bg-transparent hover:bg-default-100",
+        color: "default",
+        className: "text-default-600 border-default-500 bg-transparent",
+      },
+      {
+        variant: "outline",
+        color: "primary",
+        className: "text-primary-600 border-primary-500 bg-transparent",
       },
       {
         variant: "ghost",
-        className: `text-default-600 bg-transparent hover:bg-default-100`,
+        color: "default",
+        className: `text-default-500 bg-transparent hover:bg-default-500 hover:text-white`,
+      },
+      {
+        variant: "ghost",
+        color: "primary",
+        className: `text-primary-500 bg-transparent hover:bg-primary-500 hover:text-white`,
       },
     ],
     defaultVariants: {
@@ -66,6 +82,7 @@ const buttonStyles = cva(
       color: "default",
       iconPosition: "none",
       rounded: "2xl",
+      isDisabled: false,
     },
   }
 );
@@ -74,6 +91,7 @@ type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonStyles> & {
     icon?: React.ReactNode;
     iconPosition?: "left" | "right";
+    isDisabled?: boolean;
   };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -85,6 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       icon,
       iconPosition = "left",
       rounded,
+      isDisabled = false,
       className,
       children,
       ...props
@@ -101,9 +120,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             color,
             iconPosition,
             rounded,
+            isDisabled,
             className,
           })
         )}
+        disabled={isDisabled}
         {...props}
       >
         {children ? (
