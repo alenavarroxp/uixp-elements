@@ -1,7 +1,7 @@
 import { cn } from "@/utils";
 import "animate.css";
 import { cva, VariantProps } from "class-variance-authority";
-import { ComponentProps, forwardRef, Ref } from "react";
+import { ComponentProps, forwardRef, Ref, useState } from "react";
 
 const buttonStyles = cva(
   [
@@ -21,9 +21,9 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        solid: "",
+        solid: "border-2 ",
         outline: "border-2",
-        ghost: " duration-300",
+        ghost: " duration-300 border-2 border-transparent",
       },
       size: {
         sm: "px-4 py-2 text-sm",
@@ -34,7 +34,7 @@ const buttonStyles = cva(
         default: "bg-default-500 text-white",
         primary: "bg-primary-500 text-white",
       },
-      iconPosition: {
+      loaderPosition: {
         left: "flex items-center",
         right: "flex items-center",
         none: "",
@@ -57,27 +57,37 @@ const buttonStyles = cva(
         true: "w-full",
         false: "w-fit",
       },
+      isLoading: {
+        true: "pointer-events-none opacity-50 select-none",
+        false: "",
+      },
+      activeState: {
+        true: "",
+        false: "",
+      },
     },
     compoundVariants: [
       {
         variant: "solid",
         color: "default",
-        className: "bg-default-500 text-white",
+        className: "bg-default-500 text-white border-default-500",
       },
       {
         variant: "solid",
         color: "primary",
-        className: "bg-primary-500 text-white",
+        className: "bg-primary-500 text-white border-primary-500",
       },
       {
         variant: "outline",
         color: "default",
-        className: "text-default-600 border-default-500 bg-transparent",
+        className:
+          "text-default-600 border-default-500 bg-transparent hover:bg-default-500 hover:text-white",
       },
       {
         variant: "outline",
         color: "primary",
-        className: "text-primary-600 border-primary-500 bg-transparent",
+        className:
+          "text-primary-600 border-primary-500 bg-transparent hover:bg-primary-500 hover:text-white",
       },
       {
         variant: "ghost",
@@ -94,19 +104,24 @@ const buttonStyles = cva(
       variant: "solid",
       size: "md",
       color: "default",
-      iconPosition: "none",
+      loaderPosition: "none",
       rounded: "2xl",
       fullWidth: false,
       isDisabled: false,
+      isLoading: false,
+      activeState: false,
     },
   }
 );
 
 type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonStyles> & {
-    icon?: React.ReactNode;
-    iconPosition?: "left" | "right" | "none";
+    leftIcon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
+    loaderPosition?: "left" | "right" | "none";
     isDisabled?: boolean;
+    isLoading?: boolean;
+    activeState?: boolean;
   };
 
 const buttonPadding = {
@@ -121,21 +136,37 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       size,
       color,
-      icon,
-      iconPosition = "none",
+      leftIcon,
+      rightIcon,
+      loaderPosition = "none",
       rounded,
       fullWidth,
       isDisabled = false,
+      isLoading = false,
+      activeState = false,
       className,
       children,
       ...props
     },
     ref: Ref<HTMLButtonElement>
   ) => {
+    const [loading, setLoading] = useState(isLoading);
     const padding =
-      !children && icon
+      !children && (leftIcon || rightIcon)
         ? buttonPadding[size as keyof typeof buttonPadding] || buttonPadding.md
         : "";
+
+    const handleClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      if (!activeState) return;
+      if (props.onClick) props.onClick(e);
+      setLoading(true);
+      // Simulate an async action
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000); // 2 seconds
+    };
 
     return (
       <button
@@ -145,29 +176,56 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             variant,
             size,
             color,
-            iconPosition,
+            loaderPosition,
             rounded,
             fullWidth,
             isDisabled,
+            isLoading: loading,
             className,
           }),
           padding
         )}
-        disabled={isDisabled}
+        disabled={isDisabled || loading}
+        onClick={handleClick}
         {...props}
       >
         {children ? (
           <>
-            {icon && iconPosition === "left" && (
-              <span className="mr-3">{icon}</span>
+            {leftIcon && loaderPosition === "none" && (
+              <span className={`mr-3 ${loading ? "animate-spin" : ""}`}>
+                {leftIcon}
+              </span>
+            )}
+            {leftIcon && loaderPosition === "left" && loading && (
+              <span className={`mr-3 ${loading ? "animate-spin" : ""}`}>
+                {leftIcon}
+              </span>
             )}
             {children}
-            {icon && iconPosition === "right" && (
-              <span className="ml-3">{icon}</span>
+            {rightIcon && loaderPosition === "none" && (
+              <span className={`ml-3 ${loading ? "animate-spin" : ""}`}>
+                {rightIcon}
+              </span>
+            )}
+            {rightIcon && loaderPosition === "right" && loading && (
+              <span className={`ml-3 ${loading ? "animate-spin" : ""}`}>
+                {rightIcon}
+              </span>
             )}
           </>
         ) : (
-          <span className="rounded-full">{icon}</span>
+          <>
+            {leftIcon && (
+              <span className={`rounded-full ${loading ? "animate-spin" : ""}`}>
+                {leftIcon}
+              </span>
+            )}
+            {rightIcon && (
+              <span className={`rounded-full ${loading ? "animate-spin" : ""}`}>
+                {rightIcon}
+              </span>
+            )}
+          </>
         )}
       </button>
     );

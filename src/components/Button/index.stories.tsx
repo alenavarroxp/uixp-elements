@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { AiOutlineLoading } from "react-icons/ai";
 import { FaCoffee } from "react-icons/fa";
 import { Button } from ".";
 
@@ -27,7 +28,7 @@ const meta: Meta<typeof Button> = {
       control: { type: "select" },
       options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
-    iconPosition: {
+    loaderPosition: {
       control: { type: "select" },
       options: ["left", "right", "none"],
     },
@@ -35,7 +36,15 @@ const meta: Meta<typeof Button> = {
       control: { type: "boolean" },
       options: [true, false],
     },
+    isLoading: {
+      control: { type: "boolean" },
+      options: [true, false],
+    },
     fullWidth: {
+      control: { type: "boolean" },
+      options: [true, false],
+    },
+    activeState: {
       control: { type: "boolean" },
       options: [true, false],
     },
@@ -77,7 +86,7 @@ export const Ghost: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const IsDisabled: Story = {
   args: {
     variant: "solid",
     color: "default",
@@ -94,15 +103,28 @@ export const Disabled: Story = {
   },
 };
 
+export const IsLoading: Story = {
+  args: {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    rounded: "2xl",
+    children: "Loading...",
+    leftIcon: <AiOutlineLoading />,
+    loaderPosition: "left",
+    isLoading: true,
+  },
+};
+
 export const WithIcon: Story = {
   args: {
     variant: "solid",
     color: "default",
     size: "md",
     rounded: "2xl",
-    children: "Button",
-    icon: <FaCoffee />,
-    iconPosition: "left",
+    children: "Icons",
+    leftIcon: <FaCoffee />,
+    rightIcon: <FaCoffee />,
   },
 };
 
@@ -112,7 +134,20 @@ export const Icon: Story = {
     color: "default",
     size: "md",
     rounded: "full",
-    icon: <FaCoffee />,
-    iconPosition: "left",
+    leftIcon: <FaCoffee />,
+    loaderPosition: "left",
+  },
+};
+
+export const State: Story = {
+  args: {
+    variant: "solid",
+    color: "default",
+    size: "md",
+    rounded: "2xl",
+    children: "Save",
+    activeState: true,
+    loaderPosition: "right",
+    rightIcon: <AiOutlineLoading />,
   },
 };
