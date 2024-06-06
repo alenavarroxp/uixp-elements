@@ -1,7 +1,7 @@
 import { cn } from "@/utils";
 import "animate.css";
 import { cva, VariantProps } from "class-variance-authority";
-import { ComponentProps, forwardRef } from "react";
+import { ComponentProps, forwardRef, Ref } from "react";
 
 const buttonStyles = cva(
   [
@@ -108,7 +108,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...props
     },
-    ref
+    ref: Ref<HTMLButtonElement>
   ) => {
     return (
       <button
