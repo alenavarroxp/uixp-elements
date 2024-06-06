@@ -2,4 +2,4 @@ export * from "./Button";
 export * from "./Input";
 export * from "./Layout";
 export * from "./Text";
-import "../styles/index.css";
+import "./style.css";
