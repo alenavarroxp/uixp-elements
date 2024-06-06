@@ -6,7 +6,7 @@ const meta: Meta<typeof Button> = {
   title: " Components/Button",
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
   argTypes: {
     variant: {
@@ -27,7 +27,15 @@ const meta: Meta<typeof Button> = {
       control: { type: "select" },
       options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
+    iconPosition: {
+      control: { type: "select" },
+      options: ["left", "right", "none"],
+    },
     isDisabled: {
+      control: { type: "boolean" },
+      options: [true, false],
+    },
+    fullWidth: {
       control: { type: "boolean" },
       options: [true, false],
     },
@@ -103,7 +111,7 @@ export const Icon: Story = {
     variant: "solid",
     color: "default",
     size: "md",
-    rounded: "2xl",
+    rounded: "full",
     icon: <FaCoffee />,
     iconPosition: "left",
   },

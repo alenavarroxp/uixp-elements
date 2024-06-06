@@ -57,15 +57,17 @@ export const LoginForm = () => {
           className="mb-4"
         />
 
-        <Button
-          type="submit"
-          variant={"solid"}
-          className="flex justify-between items-center w-full"
-          icon={<FaSignInAlt />}
-          iconPosition="right"
-        >
-          Login
-        </Button>
+        <Box className="flex items-center justify-center w-full">
+          <Button
+            type="submit"
+            variant={"solid"}
+            icon={<FaSignInAlt />}
+            iconPosition="right"
+            fullWidth={false}
+          >
+            Login
+          </Button>
+        </Box>
       </Stack>
     </Box>
   );

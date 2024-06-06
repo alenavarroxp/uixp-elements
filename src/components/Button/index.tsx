@@ -5,7 +5,10 @@ import { ComponentProps, forwardRef, Ref } from "react";
 
 const buttonStyles = cva(
   [
-    "w-full",
+    "flex",
+    "items-center",
+    "justify-center",
+    "text-center",
     "font-semibold",
     "focus:outline-none",
     "disabled:cursor-not-allowed",
@@ -50,10 +53,21 @@ const buttonStyles = cva(
         true: "bg-gray-500 pointer-events-none opacity-50 select-none",
         false: "",
       },
+      fullWidth: {
+        true: "w-full",
+        false: "w-fit",
+      },
     },
     compoundVariants: [
       {
         variant: "solid",
+        color: "default",
+        className: "bg-default-500 text-white",
+      },
+      {
+        variant: "solid",
+        color: "primary",
+        className: "bg-primary-500 text-white",
       },
       {
         variant: "outline",
@@ -82,6 +96,7 @@ const buttonStyles = cva(
       color: "default",
       iconPosition: "none",
       rounded: "2xl",
+      fullWidth: false,
       isDisabled: false,
     },
   }
@@ -90,9 +105,15 @@ const buttonStyles = cva(
 type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonStyles> & {
     icon?: React.ReactNode;
-    iconPosition?: "left" | "right";
+    iconPosition?: "left" | "right" | "none";
     isDisabled?: boolean;
   };
+
+const buttonPadding = {
+  sm: "px-2 py-2",
+  md: "px-2.5 py-2.5",
+  lg: "px-3 py-3",
+};
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -101,8 +122,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       color,
       icon,
-      iconPosition = "left",
+      iconPosition = "none",
       rounded,
+      fullWidth,
       isDisabled = false,
       className,
       children,
@@ -110,6 +132,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref: Ref<HTMLButtonElement>
   ) => {
+    const padding =
+      !children && icon
+        ? buttonPadding[size as keyof typeof buttonPadding] || buttonPadding.md
+        : "";
+
     return (
       <button
         ref={ref}
@@ -120,9 +147,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             color,
             iconPosition,
             rounded,
+            fullWidth,
             isDisabled,
             className,
-          })
+          }),
+          padding
         )}
         disabled={isDisabled}
         {...props}
@@ -130,15 +159,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children ? (
           <>
             {icon && iconPosition === "left" && (
-              <span className="mr-2">{icon}</span>
+              <span className="mr-3">{icon}</span>
             )}
             {children}
             {icon && iconPosition === "right" && (
-              <span className="ml-2">{icon}</span>
+              <span className="ml-3">{icon}</span>
             )}
           </>
         ) : (
-          <span>{icon}</span>
+          <span className="rounded-full">{icon}</span>
         )}
       </button>
     );
