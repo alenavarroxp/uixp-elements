@@ -1,9 +1,13 @@
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { ComponentProps, forwardRef } from "react";
+import React, { ComponentProps, forwardRef } from "react";
 
 const avatarStyle = cva(
   [
+    "flex",
+    "items-center",
+    "justify-center",
+    "text-white",
     "select-none",
     "pointer-events-none",
     "object-cover",
@@ -16,6 +20,9 @@ const avatarStyle = cva(
         sm: "w-12 h-12",
         md: "w-14 h-14",
         lg: "w-16 h-16",
+        xl: "w-20 h-20",
+        "2xl": "w-24 h-24",
+        "3xl": "w-32 h-32",
       },
       color: {
         default: "bg-default-500",
@@ -42,23 +49,77 @@ const avatarStyle = cva(
       color: "default",
       size: "md",
       border: "none",
-      rounded: "full",
+      rounded: "none",
     },
   }
 );
 
-type AvatarProps = ComponentProps<"img"> & VariantProps<typeof avatarStyle>;
+const iconStyle = cva("transition-all", {
+  variants: {
+    size: {
+      sm: "text-lg",
+      md: "text-xl",
+      lg: "text-2xl",
+      xl: "text-3xl",
+      "2xl": "text-4xl",
+      "3xl": "text-5xl",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+const textStyle = cva(["text-sm", "font-semibold"]);
+
+type AvatarProps = ComponentProps<"img"> &
+  VariantProps<typeof avatarStyle> & {
+    icon: React.ReactNode;
+    avatarText?: string;
+    avatarTextPosition?: "top" | "bottom";
+  };
 
 export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
-  ({ color, border, rounded, src, alt, size, className, ...props }, ref) => {
+  (
+    {
+      color,
+      border,
+      rounded,
+      icon,
+      src,
+      alt,
+      size,
+      avatarText,
+      avatarTextPosition,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
-      <img
-        ref={ref}
-        src={src}
-        alt={alt}
-        className={cn(avatarStyle({ color, size, border, rounded }), className)}
-        {...props}
-      />
+      <div className="flex items-center justify-center flex-col">
+        {avatarText && avatarTextPosition === "top" && (
+          <p className={cn(textStyle)}>{avatarText}</p>
+        )}
+        <div
+          ref={ref}
+          className={cn(
+            avatarStyle({ color, size, border, rounded }),
+            className
+          )}
+          {...props}
+        >
+          {!src && icon && (
+            <div className={cn(iconStyle({ size }))}>{icon}</div>
+          )}
+          {src && (
+            <img src={src} alt={alt} className={cn(avatarStyle({ rounded }))} />
+          )}
+        </div>
+        {avatarText && avatarTextPosition === "bottom" && (
+          <p className={cn(textStyle)}>{avatarText}</p>
+        )}
+      </div>
     );
   }
 );
