@@ -61,8 +61,7 @@ export const LoginForm = () => {
           <Button
             type="submit"
             variant={"solid"}
-            rightIcon={<FaSignInAlt />}
-            loaderPosition="right"
+            leftIcon={<FaSignInAlt />}
             fullWidth={false}
           >
             Login

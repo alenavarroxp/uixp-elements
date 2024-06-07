@@ -135,7 +135,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant,
       size,
-      color,
+      border: color,
       leftIcon,
       rightIcon,
       loaderPosition = "none",

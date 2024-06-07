@@ -15,7 +15,7 @@ const meta: Meta<typeof Button> = {
       value: "solid",
       options: ["solid", "outline", "ghost"],
     },
-    color: {
+    border: {
       control: { type: "select" },
       value: "default",
       options: ["default", "primary"],
@@ -59,7 +59,7 @@ type Story = StoryObj<typeof meta>;
 export const Solid: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Button",
@@ -69,7 +69,7 @@ export const Solid: Story = {
 export const Outline: Story = {
   args: {
     variant: "outline",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Button",
@@ -79,7 +79,7 @@ export const Outline: Story = {
 export const Ghost: Story = {
   args: {
     variant: "ghost",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Button",
@@ -89,7 +89,7 @@ export const Ghost: Story = {
 export const IsDisabled: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Button",
@@ -106,7 +106,7 @@ export const IsDisabled: Story = {
 export const IsLoading: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Loading...",
@@ -116,10 +116,10 @@ export const IsLoading: Story = {
   },
 };
 
-export const WithIcon: Story = {
+export const WithIcons: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Icons",
@@ -131,7 +131,7 @@ export const WithIcon: Story = {
 export const Icon: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "full",
     leftIcon: <FaCoffee />,
@@ -142,7 +142,7 @@ export const Icon: Story = {
 export const State: Story = {
   args: {
     variant: "solid",
-    color: "default",
+    border: "default",
     size: "md",
     rounded: "2xl",
     children: "Save",
