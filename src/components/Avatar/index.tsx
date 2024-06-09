@@ -70,13 +70,28 @@ const iconStyle = cva("transition-all", {
   },
 });
 
-const textStyle = cva(["text-sm", "font-semibold"]);
+const textStyle = cva(
+  ["text-sm", "font-semibold", "rounded-md", "px-2", "py-1"],
+  {
+    variants: {
+      avatarTextColor: {
+        white: "bg-white text-black",
+        default: "bg-default-500 text-white",
+        primary: "bg-primary-500 text-white",
+      },
+    },
+    defaultVariants: {
+      avatarTextColor: "default",
+    },
+  }
+);
 
 type AvatarProps = ComponentProps<"img"> &
   VariantProps<typeof avatarStyle> & {
     icon: React.ReactNode;
     avatarText?: string;
     avatarTextPosition?: "top" | "bottom";
+    avatarTextColor?: "white" | "default" | "primary";
   };
 
 export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
@@ -91,6 +106,7 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
       size,
       avatarText,
       avatarTextPosition,
+      avatarTextColor,
       className,
       ...props
     },
@@ -99,7 +115,9 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
     return (
       <div className="flex items-center justify-center flex-col">
         {avatarText && avatarTextPosition === "top" && (
-          <p className={cn(textStyle)}>{avatarText}</p>
+          <p className={cn(textStyle({ avatarTextColor }), "mb-2")}>
+            {avatarText}
+          </p>
         )}
         <div
           ref={ref}
@@ -117,7 +135,7 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
           )}
         </div>
         {avatarText && avatarTextPosition === "bottom" && (
-          <p className={cn(textStyle)}>{avatarText}</p>
+          <p className={cn(textStyle({ avatarTextColor }))}>{avatarText}</p>
         )}
       </div>
     );

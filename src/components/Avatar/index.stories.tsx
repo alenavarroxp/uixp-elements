@@ -67,5 +67,6 @@ export const WithText: Story = {
     src: "https://avatars.githubusercontent.com/u/91194203?v=4",
     avatarText: "Alejandro Navarro",
     avatarTextPosition: "top",
+    avatarTextColor: "primary",
   },
 };
