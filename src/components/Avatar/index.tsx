@@ -9,7 +9,6 @@ const avatarStyle = cva(
     "justify-center",
     "text-white",
     "select-none",
-    "pointer-events-none",
     "object-cover",
     "transition-all",
     "duration-300",
@@ -43,13 +42,22 @@ const avatarStyle = cva(
         default: "border-2 border-default-500",
         primary: "border-2 border-primary-500",
       },
+      isDisabled: {
+        true: "opacity-50 pointer-events-none",
+        false: "",
+      },
+      isFocusable: {
+        true: "pointer-events-auto cursor-pointer hover:scale-105",
+        false: "pointer-events-none",
+      },
     },
 
     defaultVariants: {
-      color: "default",
       size: "md",
       border: "none",
-      rounded: "none",
+      rounded: "full",
+      isDisabled: false,
+      isFocusable: false,
     },
   }
 );
@@ -71,7 +79,14 @@ const iconStyle = cva("transition-all", {
 });
 
 const textStyle = cva(
-  ["text-sm", "font-semibold", "rounded-md", "px-2", "py-1"],
+  [
+    "text-sm",
+    "font-semibold",
+    "rounded-md",
+    "px-4",
+    "py-1",
+    "whitespace-nowrap",
+  ],
   {
     variants: {
       avatarTextColor: {
@@ -79,19 +94,42 @@ const textStyle = cva(
         default: "bg-default-500 text-white",
         primary: "bg-primary-500 text-white",
       },
+      visibility: {
+        hidden: "invisible",
+        visible: "visible",
+      },
     },
     defaultVariants: {
       avatarTextColor: "default",
+      visibility: "hidden",
     },
   }
 );
 
+const nameStyle = cva("flex items-center justify-center font-semibold", {
+  variants: {
+    size: {
+      sm: "text-sm",
+      md: "text-md",
+      lg: "text-lg",
+      xl: "text-xl",
+      "2xl": "text-2xl",
+      "3xl": "text-3xl",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
 type AvatarProps = ComponentProps<"img"> &
   VariantProps<typeof avatarStyle> & {
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
+    name?: string;
     avatarText?: string;
     avatarTextPosition?: "top" | "bottom";
     avatarTextColor?: "white" | "default" | "primary";
+    isFocusable?: boolean;
   };
 
 export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
@@ -104,38 +142,78 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
       src,
       alt,
       size,
+      name,
       avatarText,
       avatarTextPosition,
       avatarTextColor,
+      isDisabled,
+      isFocusable,
       className,
       ...props
     },
     ref
   ) => {
+    const initialLetters = name ? name.slice(0, 3) : "";
+
     return (
-      <div className="flex items-center justify-center flex-col">
+      <div
+        className={cn(
+          "flex flex-col items-center",
+          avatarStyle({ isDisabled, isFocusable }),
+          isFocusable && "group"
+        )}
+      >
         {avatarText && avatarTextPosition === "top" && (
-          <p className={cn(textStyle({ avatarTextColor }), "mb-2")}>
+          <p
+            className={cn(
+              textStyle({
+                avatarTextColor,
+                visibility: isFocusable ? "hidden" : "visible",
+              }),
+              "group-hover:visible mb-1"
+            )}
+          >
             {avatarText}
           </p>
         )}
         <div
           ref={ref}
           className={cn(
+            "flex-shrink-0", // Asegurando que el contenedor de la imagen no se reduzca
             avatarStyle({ color, size, border, rounded }),
+            "relative overflow-hidden", // Para asegurar el recorte circular
             className
           )}
+          style={{ borderRadius: "50%" }} // Asegurando el borde redondeado
           {...props}
         >
+          {!src && !icon && name && (
+            <div className={cn(nameStyle({ size }))}>{initialLetters}</div>
+          )}
           {!src && icon && (
             <div className={cn(iconStyle({ size }))}>{icon}</div>
           )}
           {src && (
-            <img src={src} alt={alt} className={cn(avatarStyle({ rounded }))} />
+            <img
+              src={src}
+              alt={alt}
+              className="w-full h-full object-cover"
+              style={{ borderRadius: "50%" }} // Asegurando el borde redondeado
+            />
           )}
         </div>
         {avatarText && avatarTextPosition === "bottom" && (
-          <p className={cn(textStyle({ avatarTextColor }))}>{avatarText}</p>
+          <p
+            className={cn(
+              textStyle({
+                avatarTextColor,
+                visibility: isFocusable ? "hidden" : "visible",
+              }),
+              "group-hover:visible mt-1"
+            )}
+          >
+            {avatarText}
+          </p>
         )}
       </div>
     );

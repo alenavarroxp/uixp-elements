@@ -59,7 +59,8 @@ export const WithImage: Story = {
     src: "https://avatars.githubusercontent.com/u/91194203?v=4",
   },
 };
-export const WithText: Story = {
+
+export const WithLabel: Story = {
   args: {
     color: "default",
     size: "md",
@@ -67,6 +68,48 @@ export const WithText: Story = {
     src: "https://avatars.githubusercontent.com/u/91194203?v=4",
     avatarText: "Alejandro Navarro",
     avatarTextPosition: "top",
-    avatarTextColor: "primary",
+    avatarTextColor: "default",
+  },
+};
+
+export const IsDisabled: Story = {
+  args: {
+    color: "default",
+    size: "md",
+    rounded: "full",
+    src: "https://avatars.githubusercontent.com/u/91194203?v=4",
+    isDisabled: true,
+  },
+};
+
+export const IsFocusable: Story = {
+  args: {
+    color: "default",
+    size: "md",
+    rounded: "full",
+    src: "https://avatars.githubusercontent.com/u/91194203?v=4",
+    isFocusable: true,
+    avatarText: "Alejandro Navarro",
+    avatarTextPosition: "bottom",
+    avatarTextColor: "default",
+  },
+};
+
+export const Bordered: Story = {
+  args: {
+    color: "default",
+    size: "md",
+    rounded: "full",
+    src: "https://avatars.githubusercontent.com/u/91194203?v=4",
+    border: "default",
+  },
+};
+
+export const WithText: Story = {
+  args: {
+    color: "default",
+    size: "md",
+    rounded: "full",
+    name: "Alejandro Navarro",
   },
 };
